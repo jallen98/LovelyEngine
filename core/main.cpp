@@ -1,5 +1,9 @@
-#include <iostream>
+#include "Graphics/Window.h"
 
 int main() {
-    std::cout << "Hello world!" << std::endl;
+    lov::Window window(800, 600, "Lovely Engine");
+
+    while(window.isOpen()) {
+        window.update();
+    }
 }

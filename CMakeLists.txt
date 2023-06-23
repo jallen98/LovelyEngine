@@ -19,8 +19,7 @@ add_subdirectory(external/glfw)
 add_executable(LovelyEngine ${lovelyEngineSources})
 
 # Add include directories
-file(GLOB lovelyEngineHeaders LIST_DIRECTORIES true core/*/include)
-target_include_directories(LovelyEngine PRIVATE lovelyEngineHeaders)
+target_include_directories(LovelyEngine PRIVATE core/include)
 
 # Add external includes
 target_include_directories(LovelyEngine PRIVATE external/glfw/include external/glad/include)

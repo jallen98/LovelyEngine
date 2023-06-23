@@ -3,6 +3,7 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
+#include "Graphics/ElementBuffer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -15,10 +16,16 @@ int main() {
     window.setClearColor(0.2f, 0.3f, 0.3f);
 
     float vertices[] = {
-        // positions         // colors          // texture coords
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f,     // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,     // bottom left
-         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5f, 1.0f      // top
+         // positions          // colors           // texture coords
+         0.5f,  0.5f, 0.0f,    1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+         0.5f, -0.5f, 0.0f,    0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+        -0.5f, -0.5f, 0.0f,    0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+        -0.5f,  0.5f, 0.0f,    1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+    };
+
+    unsigned int indices[] = {
+        0, 1, 3,   // first triangle
+        1, 2, 3    // second triangle
     };
 
     lov::Graphics::Shader shader;
@@ -36,6 +43,10 @@ int main() {
     vao.linkAttribute(1, 3, lov::LOV_FLOAT, 8 * sizeof(float), 3 * sizeof(float));
     vao.linkAttribute(2, 2, lov::LOV_FLOAT, 8 * sizeof(float), 6 * sizeof(float));
 
+    lov::Graphics::ElementBuffer ebo;
+    ebo.bind();
+    ebo.bufferIndices(indices, sizeof(indices));
+
     lov::Graphics::Texture woodTexture("/home/jallen/LovelyEngine/res/Textures/container.jpg");
     woodTexture.bind();
 
@@ -46,7 +57,7 @@ int main() {
 
         window.clear();
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         window.update();
     }

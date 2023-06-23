@@ -2,26 +2,21 @@
 
 #include "Graphics/Window.h"
 
-/**
- * @file Keyboard.h
- * @brief Defines enumerations for reading keyboard state
- * @see See #lovely::Input::KeyState for available key states
- * @see See #lovely::Input::KeyCode for available key codes
-*/
+/// @file Keyboard.h
+/// @brief Defines enumerations for reading keyboard state
+/// @see See #lov::Input::KeyState for available key states
+/// @see See #lov::Input::KeyCode for available key codes
 
-namespace lovely {
+namespace lov {
     namespace Input {
-        /**
-         * @brief Keyboard key states
-        */
+        /// @brief Keyboard key states
         enum KeyState {
-            KEY_RELEASE = 0, ///< Key was released
-            KEY_PRESS   = 1 ///< Key was pressed
+            KEY_RELEASE = 0,    ///< Key was released
+            KEY_PRESS   = 1     ///< Key was pressed
         };
 
-        /**
-         * @brief Keyboard key codes as defined by GLFW
-        */
+
+        /// @brief Keyboard key codes as defined by GLFW
         enum KeyCode {
             KEY_UNKNOWN            = -1,
             KEY_SPACE              = 32,

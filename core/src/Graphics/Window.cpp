@@ -1,6 +1,6 @@
 #include "Graphics/Window.h"
 
-lovely::Graphics::Window::Window(unsigned int width, unsigned int height, const std::string& title) {
+lov::Graphics::Window::Window(unsigned int width, unsigned int height, const std::string& title) {
     // Initialize GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -21,36 +21,36 @@ lovely::Graphics::Window::Window(unsigned int width, unsigned int height, const 
     });
 }
 
-lovely::Graphics::Window::~Window() {
+lov::Graphics::Window::~Window() {
     glfwTerminate();
 }
 
-bool lovely::Graphics::Window::isOpen() const {
+bool lov::Graphics::Window::isOpen() const {
     return !glfwWindowShouldClose(m_window);
 }
 
-void lovely::Graphics::Window::close() {
+void lov::Graphics::Window::close() {
     glfwSetWindowShouldClose(m_window, true);
 }
 
-void lovely::Graphics::Window::setClearColor(float red, float green, float blue, float alpha) {
+void lov::Graphics::Window::setClearColor(float red, float green, float blue, float alpha) {
     glClearColor(red, green, blue, alpha);
 }
 
-void lovely::Graphics::Window::clear() {
+void lov::Graphics::Window::clear() {
     // Clear buffers
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void lovely::Graphics::Window::update() {
-    // Poll events
-    glfwPollEvents();
-
+void lov::Graphics::Window::update() {
     // Swap buffers
     glfwSwapBuffers(m_window);
+
+    // Poll events
+    glfwPollEvents();
 }
 
-lovely::Input::KeyState lovely::Graphics::Window::getKeyState(const Input::KeyCode& key) {
+lov::Input::KeyState lov::Graphics::Window::getKeyState(const Input::KeyCode& key) {
     int state = glfwGetKey(m_window, key);
 
     if (state == GLFW_PRESS) {

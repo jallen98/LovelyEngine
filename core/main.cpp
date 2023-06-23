@@ -2,6 +2,7 @@
 #include "Graphics/VertexArray.h"
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/Shader.h"
+#include "Graphics/Texture.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -14,14 +15,14 @@ int main() {
     window.setClearColor(0.2f, 0.3f, 0.3f);
 
     float vertices[] = {
-        // positions         // colors
-        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top
+        // positions         // colors          // texture coords
+         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  1.0f, 0.0f,     // bottom right
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,     // bottom left
+         0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.5f, 1.0f      // top
     };
 
     lov::Graphics::Shader shader;
-    shader.compileFromFiles("/home/jallen/LovelyEngine/core/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/core/res/Shaders/basic.fs");
+    shader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
     shader.bind();
 
     lov::Graphics::VertexArray vao;
@@ -31,8 +32,12 @@ int main() {
     vbo.bind();
     vbo.bufferData(vertices, sizeof(vertices));
 
-    vao.linkAttribute(0, 3, lov::LOV_FLOAT, 6 * sizeof(float), 0);
-    vao.linkAttribute(1, 3, lov::LOV_FLOAT, 6 * sizeof(float), 3 * sizeof(float));
+    vao.linkAttribute(0, 3, lov::LOV_FLOAT, 8 * sizeof(float), 0);
+    vao.linkAttribute(1, 3, lov::LOV_FLOAT, 8 * sizeof(float), 3 * sizeof(float));
+    vao.linkAttribute(2, 2, lov::LOV_FLOAT, 8 * sizeof(float), 6 * sizeof(float));
+
+    lov::Graphics::Texture woodTexture("/home/jallen/LovelyEngine/res/Textures/container.jpg");
+    woodTexture.bind();
 
     while(window.isOpen()) {
         if (window.getKeyState(lov::Input::KEY_ESCAPE)) {

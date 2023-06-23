@@ -29,6 +29,21 @@ namespace lov {
             /// @param fragmentShaderPath Path to the fragment shader source
             void compileFromFiles(const char* vertexShaderPath, const char* fragmentShaderPath);
 
+            /// @brief Set a uniform boolean with the given name and value
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            void setUniformBool(const char* name, bool value);
+
+            /// @brief Set a uniform integer with the given name and value
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            void setUniformInt(const char* name, int value);
+
+            /// @brief Set a uniform float with the given name and value
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            void setUniformFloat(const char* name, float value);
+
         private:
             /// @brief ID for this shader program
             lov_uint m_id;

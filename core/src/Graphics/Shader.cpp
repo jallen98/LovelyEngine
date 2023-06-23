@@ -63,3 +63,15 @@ void lov::Graphics::Shader::compileFromFiles(const char* vertexShaderPath, const
     std::string fragmentShaderSource = fragmentShaderStream.str();
     compileFromText(vertexShaderSource.c_str(), fragmentShaderSource.c_str());
 }
+
+void lov::Graphics::Shader::setUniformBool(const char* name, bool value) {
+    setUniformInt(name, value);
+}
+
+void lov::Graphics::Shader::setUniformInt(const char* name, int value) {
+    glUniform1i(glGetUniformLocation(m_id, name), value);
+}
+
+void lov::Graphics::Shader::setUniformFloat(const char* name, float value) {
+    glUniform1f(glGetUniformLocation(m_id, name), value);
+}

@@ -7,7 +7,7 @@ project(LovelyEngine)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Add source files
-file(GLOB_RECURSE lovelyEngineSources core/*.cpp external/glad/src/glad.c)
+file(GLOB_RECURSE lovelyEngineSources core/*.cpp external/glad/src/glad.c external/stb_image/src/stb_image.cpp)
 
 # Compile submodules
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Disable GLFW examples")
@@ -22,7 +22,7 @@ add_executable(LovelyEngine ${lovelyEngineSources})
 target_include_directories(LovelyEngine PRIVATE core/include)
 
 # Add external includes
-target_include_directories(LovelyEngine PRIVATE external/glfw/include external/glad/include)
+target_include_directories(LovelyEngine PRIVATE external/glfw/include external/glad/include external/stb_image/include)
 
 # Link external libraries
 target_link_libraries(LovelyEngine glfw ${GLFW_LIBRARIES})

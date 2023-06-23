@@ -14,9 +14,10 @@ int main() {
     window.setClearColor(0.2f, 0.3f, 0.3f);
 
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f,  0.5f, 0.0f
+        // positions         // colors
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top
     };
 
     lov::Graphics::Shader shader;
@@ -30,7 +31,8 @@ int main() {
     vbo.bind();
     vbo.bufferData(vertices, sizeof(vertices));
 
-    vao.linkAttribute(0, 3, lov::LOV_FLOAT, 3 * sizeof(float), 0);
+    vao.linkAttribute(0, 3, lov::LOV_FLOAT, 6 * sizeof(float), 0);
+    vao.linkAttribute(1, 3, lov::LOV_FLOAT, 6 * sizeof(float), 3 * sizeof(float));
 
     while(window.isOpen()) {
         if (window.getKeyState(lov::Input::KEY_ESCAPE)) {

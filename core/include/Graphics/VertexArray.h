@@ -34,6 +34,7 @@ namespace lov {
             void unbind() const;
 
         private:
+            /// @brief The ID for this VertexArray
             lov_uint m_id;
         };
     }

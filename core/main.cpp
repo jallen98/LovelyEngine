@@ -47,8 +47,14 @@ int main() {
     ebo.bind();
     ebo.bufferIndices(indices, sizeof(indices));
 
+    shader.setUniformInt("texture1", 0);
+    shader.setUniformInt("texture2", 1);
+
     lov::Graphics::Texture woodTexture("/home/jallen/LovelyEngine/res/Textures/container.jpg");
-    woodTexture.bind();
+    woodTexture.bind(0);
+
+    lov::Graphics::Texture faceTexture("/home/jallen/LovelyEngine/res/Textures/awesomeface.png");
+    faceTexture.bind(1);
 
     while(window.isOpen()) {
         if (window.getKeyState(lov::Input::KEY_ESCAPE)) {
@@ -56,6 +62,9 @@ int main() {
         }
 
         window.clear();
+
+        woodTexture.bind(0);
+        faceTexture.bind(1);
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

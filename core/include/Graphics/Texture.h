@@ -15,7 +15,8 @@ namespace lov {
             Texture(const char* path);
 
             /// @brief Bind this Texture to the OpenGL state
-            void bind() const;
+            /// @param unit Optionally set the texture unit to activate when binding this texture. Default is GL_TEXTURE0
+            void bind(lov_uint unit = 0) const;
 
             /// @brief Unbind this Texture from the OpenGL state
             void unbind() const;

@@ -24,7 +24,7 @@ namespace lov {
             /// @param data The data to buffer
             /// @param size The size of the data to buffer
             template <typename T>
-            inline void bufferData(const T* data, size_t size) {
+            inline void bufferData(const T* data, lov_size size) {
                 glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
             }
 

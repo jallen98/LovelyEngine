@@ -3,7 +3,7 @@
 /// @file Texture.h
 /// @brief Defines the #lov::Graphics::Texture class that allows OpenGL textures to be created
 
-#include "Util/Types.h"
+#include "System/Types.h"
 
 namespace lov {
     namespace Graphics {

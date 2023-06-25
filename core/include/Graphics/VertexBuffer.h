@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Util/Types.h"
+#include "System/Types.h"
 
 /// @file VertexBuffer.h
 /// @brief High level abstraction of OpenGL VBOs

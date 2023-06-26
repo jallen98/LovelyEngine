@@ -1,10 +1,12 @@
+#include "System/Utility.h"
+
 namespace lov {
     template <lov_size DIM, typename T>
     VectorT<DIM, T> operator+(const VectorT<DIM, T>& vec, T scalar) {
         VectorT<DIM, T> sum = vec;
 
         // Calculate the sum of each vector component + scalar
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             sum[i] += scalar;
         }
 
@@ -16,7 +18,7 @@ namespace lov {
         VectorT<DIM, T> diff = vec;
 
         // Calculate the difference of each vector component - scalar
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             diff[i] -= scalar;
         }
 
@@ -28,7 +30,7 @@ namespace lov {
         VectorT<DIM, T> product = vec;
 
         // Calculate the product of each vector component * scalar
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             product[i] *= scalar;
         }
 
@@ -40,7 +42,7 @@ namespace lov {
         VectorT<DIM, T> quotient = vec;
 
         // Calculate the quotient of each vector component / scalar
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             quotient[i] /= scalar;
         }
 
@@ -52,7 +54,7 @@ namespace lov {
         VectorT<DIM, T> sum;
 
         // Calculate the sum of each component in the two vectors
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             sum[i] = left[i] + right[i];
         }
 
@@ -64,7 +66,7 @@ namespace lov {
         VectorT<DIM, T> diff;
 
         // Calculate the difference of each component in the two vectors
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             diff[i] = left[i] - right[i];
         }
 
@@ -76,11 +78,23 @@ namespace lov {
         VectorT<DIM, T> neg;
 
         // Negate each component of the given vector
-        for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
             neg[i] = -vec[i];
         }
 
         return neg;
+    }
+
+    template <lov_size DIM, typename T>
+    bool operator==(const VectorT<DIM, T>& left, const VectorT<DIM, T>& right) {
+        // Check equality of each component
+        for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
+            if (!Util::almostEqual(left[i], right[i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     namespace Vector {
@@ -89,7 +103,7 @@ namespace lov {
             T product = 0;
 
             // Add the product of each component of the given vectors to the overall dot product
-            for (int i = 0; i < VectorT<DIM, T>::length(); i++) {
+            for (int i = 0; i < VectorT<DIM, T>::dimension(); i++) {
                 product += left[i] * right[i];
             }
 

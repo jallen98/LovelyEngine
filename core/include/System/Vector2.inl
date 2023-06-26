@@ -1,6 +1,9 @@
 #include <assert.h>
 
 namespace lov {
+    template<typename T>
+    Vector2<T>::VectorT(T x, T y): x(x), y(y) {}
+
     template <typename T>
     void Vector2<T>::operator+=(T scalar) {
         // Add the given scalar to this vectors components
@@ -46,32 +49,30 @@ namespace lov {
     template <typename T>
     T& Vector2<T>::operator[](lov_size i) {
         // Ensure the given index is within the bounds of this vector
-        assert(i >=0 && i < this->length());
+        assert(i >=0 && i < Vector2<T>::dimension());
 
         // Return the appropriate component based on the given index
         switch (i) {
+            default:
             case 0:
                 return this->x;
             case 1:
                 return this->y;
-            default:
-                return this->x;
         }
     }
 
     template <typename T>
     const T& Vector2<T>::operator[](lov_size i) const {
         // Ensure the given index is within the bounds of this vector
-        assert(i >=0 && i < this->length());
+        assert(i >=0 && i < Vector2<T>::dimension());
 
         // Return the appropriate component based on the given index
         switch (i) {
+            default:
             case 0:
                 return this->x;
             case 1:
                 return this->y;
-            default:
-                return this->x;
         }
     }
 }

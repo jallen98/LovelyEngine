@@ -57,14 +57,6 @@ int main() {
     lov::Graphics::Texture faceTexture("/home/jallen/LovelyEngine/res/Textures/awesomeface.png");
     faceTexture.bind(1);
 
-    lov::Vector2f v1 = { 1, 2 };
-    lov::Vector2f v2 = { 3, 4 };
-
-    lov::Vector3f v3 = { 1, 2, 3 };
-
-    float prod = lov::Vector::dot(v1, v2);
-    std::cout << (-v1 + 3.0f).x << std::endl;
-
     while(window.isOpen()) {
         if (window.getKeyState(lov::Input::KEY_ESCAPE)) {
             window.close();

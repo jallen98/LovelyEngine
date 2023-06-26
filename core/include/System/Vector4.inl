@@ -1,6 +1,9 @@
 #include <assert.h>
 
 namespace lov {
+    template<typename T>
+    Vector4<T>::VectorT(T x, T y, T z, T w): x(x), y(y), z(z), w(w) {}
+
     template <typename T>
     void Vector4<T>::operator+=(T scalar) {
         // Add the given scalar to this vectors components
@@ -58,7 +61,7 @@ namespace lov {
     template <typename T>
     T& Vector4<T>::operator[](lov_size i) {
         // Ensure the given index is within the bounds of this vector
-        assert(i >=0 && i < this->length());
+        assert(i >=0 && i < Vector4<T>::dimension());
 
         // Return the appropriate component based on the given index
         switch (i) {
@@ -78,7 +81,7 @@ namespace lov {
     template <typename T>
     const T& Vector4<T>::operator[](lov_size i) const {
         // Ensure the given index is within the bounds of this vector
-        assert(i >=0 && i < this->length());
+        assert(i >=0 && i < Vector4<T>::dimension());
 
         // Return the appropriate component based on the given index
         switch (i) {

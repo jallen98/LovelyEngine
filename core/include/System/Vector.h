@@ -83,6 +83,15 @@ namespace lov {
     template <lov_size DIM, typename T>
     VectorT<DIM, T> operator-(const VectorT<DIM, T>& vec);
 
+    /// @brief Check component-wise equality of the given vectors
+    /// @tparam T The type of vector components
+    /// @tparam DIM The dimensionality of the vectors
+    /// @param left The lefthand vector to check
+    /// @param right The righthand vector to check
+    /// @return Whether the given vectors are equal component-wise
+    template <lov_size DIM, typename T>
+    bool operator==(const VectorT<DIM, T>& left, const VectorT<DIM, T>& right);
+
     /// @brief A namespace that provides static functions for vector arithmetic
     namespace Vector {
         /// @brief Performs the dot product between the given vectors

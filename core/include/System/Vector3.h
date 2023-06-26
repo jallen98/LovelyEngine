@@ -15,9 +15,18 @@ namespace lov {
         union { T y, g, t; }; ///< The y, g, or t component of the vector
         union { T z, b, p; }; ///< The z, b, or p component of the vector
 
+        /// @brief Default contructor
+        VectorT() = default;
+
+        /// @brief Construct this Vector3 with the given values
+        /// @param x The x, r, or s component of this Vector3
+        /// @param y The y, g, or t component of this Vector3
+        /// @param z The z, b, or p component of this Vector3
+        VectorT(T x, T y, T z);
+
         /// @brief Returns the dimensionality of this vector, to be used in functions generalized for vectors of any size
         /// @return The dimensionality of this vector
-        static constexpr lov_size length() { return 3; };
+        static constexpr lov_size dimension() { return 3; };
 
         /// @brief Performs component-wise scalar addition on this vector
         /// @param scalar The scalar to add to each component of this vector

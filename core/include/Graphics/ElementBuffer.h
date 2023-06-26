@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Util/Types.h"
+#include "System/Types.h"
 
 /// @file ElementBuffer.h
 /// @brief Defines the lov::Graphics::ElementBuffer class used to create an OpenGL EBO

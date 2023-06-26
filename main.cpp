@@ -4,6 +4,7 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 #include "Graphics/ElementBuffer.h"
+#include "System/Vector.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

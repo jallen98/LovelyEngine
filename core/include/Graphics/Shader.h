@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Util/Types.h"
+#include "System/Types.h"
 
 /// @file Shader.h
 /// @brief Contains #lov::Graphics::Shader class to create OpenGL shaders

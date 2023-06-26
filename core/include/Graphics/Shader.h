@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Graphics/Transform.h"
 #include "System/Types.h"
 
 /// @file Shader.h
@@ -43,6 +44,11 @@ namespace lov {
             /// @param name Name of the uniform
             /// @param value Value to set
             void setUniformFloat(const char* name, float value);
+
+            /// @brief Set a uniform transform with the given name and value
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            void setUniformTransform(const char* name, const Transform& value);
 
         private:
             /// @brief ID for this shader program

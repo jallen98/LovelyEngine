@@ -1,3 +1,5 @@
+#pragma once
+
 #include "System/Vector2.h"
 #include "System/Vector3.h"
 #include "System/Vector4.h"

@@ -20,6 +20,28 @@ namespace lov {
             /// @param w The w column of this Transform
             Transform(const Vector4f& x, const Vector4f& y, const Vector4f& z, const Vector4f& w);
 
+            /// @brief Contruct this Transform with the given values
+            /// @param x0 Column 0, Row 0
+            /// @param x1 Column 0, Row 1
+            /// @param x2 Column 0, Row 2
+            /// @param x3 Column 0, Row 3
+            /// @param y0 Column 1, Row 0
+            /// @param y1 Column 1, Row 1
+            /// @param y2 Column 1, Row 2
+            /// @param y3 Column 1, Row 3
+            /// @param z0 Column 2, Row 0
+            /// @param z1 Column 2, Row 1
+            /// @param z2 Column 2, Row 2
+            /// @param z3 Column 2, Row 3
+            /// @param w0 Column 3, Row 0
+            /// @param w1 Column 3, Row 1
+            /// @param w2 Column 3, Row 2
+            /// @param w3 Column 3, Row 3
+            Transform(float x0, float x1, float x2, float x3,
+                float y0, float y1, float y2, float y3,
+                float z0, float z1, float z2, float z3,
+                float w0, float w1, float w2, float w3);
+
             /// @brief Construct this Transform as an Orthographic Projection
             /// @param left Left coordinate of the frustum
             /// @param right Right coordinate of the frustum
@@ -93,15 +115,29 @@ namespace lov {
             /// @return A const reference to the column at the given index
             const Vector4f& operator[](lov_size i) const;
 
+            /// @brief Multiply this transform by the given transform
+            /// @param other The transform to multiply by
+            /// @return The resulting product as a transform matrix
+            Transform operator*(const Transform& other) const;
+
+            /// @brief Multiply this transform by the given transform in place
+            /// @param other The transform to multiply by
+            void operator*=(const Transform& other);
+
             /// @brief Multiply this transform by the given vector
             /// @param other The vector to multiply by
             /// @return The resulting product as a 4D vector
             Vector4f operator*(const Vector4f& other) const;
 
-            /// @brief Multiply this transform by the given transform
-            /// @param other The transform to multiply by
-            /// @return The resulting product as a transform matrix
-            Transform operator*(const Transform& other) const;
+            /// @brief Is the given transform equal component-wise to this transform?
+            /// @param other The transform to check equality against
+            /// @return Whether the given transform is equal to this transform
+            bool operator==(const Transform& other) const;
+
+            /// @brief Is the given transform different component-wise than this transform?
+            /// @param other The trasform to check inequality against
+            /// @return Whether the given transform is different component-wise than this transform
+            bool operator!=(const Transform& other) const;
         };
     }
 }

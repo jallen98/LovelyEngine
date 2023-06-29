@@ -61,6 +61,19 @@ int main() {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
+    lov::Vector3f cubePositions[] = {
+        lov::Vector3f( 0.0f,  0.0f,  0.0f),
+        lov::Vector3f( 2.0f,  5.0f, -15.0f),
+        lov::Vector3f(-1.5f, -2.2f, -2.5f),
+        lov::Vector3f(-3.8f, -2.0f, -12.3f),
+        lov::Vector3f( 2.4f, -0.4f, -3.5f),
+        lov::Vector3f(-1.7f,  3.0f, -7.5f),
+        lov::Vector3f( 1.3f, -2.0f, -2.5f),
+        lov::Vector3f( 1.5f,  2.0f, -2.5f),
+        lov::Vector3f( 1.5f,  0.2f, -1.5f),
+        lov::Vector3f(-1.3f,  1.0f, -1.5f)
+    };
+
     lov::Graphics::Shader shader;
     shader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
     shader.bind();
@@ -97,16 +110,18 @@ int main() {
         }
         window.clear();
 
-
-        lov::Graphics::Transform model;
-        float time = (float) glfwGetTime();
-        model = model.rotate(0.5f, 1.0f, 0.0f, time * lov::Util::toRadians(50.0f));
-        shader.setUniformTransform("model", model);
-
         woodTexture.bind(0);
         faceTexture.bind(1);
 
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        for (int i = 0; i < 10; i++) {
+            lov::Graphics::Transform model;
+            model = model.translate(cubePositions[i]);
+            float angle = 20.0f * i;
+            model = model.rotate(1.0f, 0.3f, 0.5f, lov::Util::toRadians(angle));
+            shader.setUniformTransform("model", model);
+
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
         window.update();
     }

@@ -16,6 +16,12 @@ lov::Graphics::Transform::Transform(const Vector4f& x, const Vector4f& y, const 
     z(z),
     w(w)
 {}
+lov::Graphics::Transform::Transform(float x0, float x1, float x2, float x3, float y0, float y1, float y2, float y3, float z0, float z1, float z2, float z3, float w0, float w1, float w2, float w3):
+    x(x0, x1, x2, x3),
+    y(y0, y1, y2, y3),
+    z(z0, z1, z2, z3),
+    w(w0, w1, w2, w3)
+{}
 
 lov::Graphics::Transform::Transform(float left, float right, float bottom, float top, float near, float far) {
     // Initialize this transform as the identity matrix
@@ -24,10 +30,10 @@ lov::Graphics::Transform::Transform(float left, float right, float bottom, float
     // Set values, reference for calculations: http://www.songho.ca/opengl/gl_projectionmatrix.html
     x[0] = 2.0f / (right - left);
     y[1] = 2.0f / (top - bottom);
-    z[2] = 2.0f / (far - near);
-    z[3] = -(right + left) / (right - left);
-    z[1] = -(top + bottom) / (top - bottom);
-    z[2] = -(far + near) / (far - near);
+    z[2] = -2.0f / (far - near);
+    w[0] = -(right + left) / (right - left);
+    w[1] = -(top + bottom) / (top - bottom);
+    w[2] = -(far + near) / (far - near);
 }
 
 lov::Graphics::Transform::Transform(float fov, float aspect, float near, float far) {
@@ -135,6 +141,36 @@ const lov::Vector4f& lov::Graphics::Transform::operator[](lov_size i) const {
     }
 }
 
+lov::Graphics::Transform lov::Graphics::Transform::operator*(const Transform& other) const {
+    // Get rows to be used for multiplication
+    Vector4f row0 = { x[0], y[0], z[0], w[0] };
+    Vector4f row1 = { x[1], y[1], z[1], w[1] };
+    Vector4f row2 = { x[2], y[2], z[2], w[2] };
+    Vector4f row3 = { x[3], y[3], z[3], w[3] };
+
+    // Perform matrix calculation
+    return {
+        { Vector::dot(row0, other.x), Vector::dot(row1, other.x), Vector::dot(row2, other.x), Vector::dot(row3, other.x) },
+        { Vector::dot(row0, other.y), Vector::dot(row1, other.y), Vector::dot(row2, other.y), Vector::dot(row3, other.y) },
+        { Vector::dot(row0, other.z), Vector::dot(row1, other.z), Vector::dot(row2, other.z), Vector::dot(row3, other.z) },
+        { Vector::dot(row0, other.w), Vector::dot(row1, other.w), Vector::dot(row2, other.w), Vector::dot(row3, other.w) }
+    };
+}
+
+void lov::Graphics::Transform::operator*=(const Transform& other) {
+    // Get rows to be used for multiplication
+    Vector4f row0 = { x[0], y[0], z[0], w[0] };
+    Vector4f row1 = { x[1], y[1], z[1], w[1] };
+    Vector4f row2 = { x[2], y[2], z[2], w[2] };
+    Vector4f row3 = { x[3], y[3], z[3], w[3] };
+
+    // Perform matrix calculation
+    this->x = { Vector::dot(row0, other.x), Vector::dot(row1, other.x), Vector::dot(row2, other.x), Vector::dot(row3, other.x) };
+    this->y = { Vector::dot(row0, other.y), Vector::dot(row1, other.y), Vector::dot(row2, other.y), Vector::dot(row3, other.y) };
+    this->z = { Vector::dot(row0, other.z), Vector::dot(row1, other.z), Vector::dot(row2, other.z), Vector::dot(row3, other.z) };
+    this->w = { Vector::dot(row0, other.w), Vector::dot(row1, other.w), Vector::dot(row2, other.w), Vector::dot(row3, other.w) };
+}
+
 lov::Vector4f lov::Graphics::Transform::operator*(const Vector4f& other) const {
     // Perform calculation
     return {
@@ -145,18 +181,10 @@ lov::Vector4f lov::Graphics::Transform::operator*(const Vector4f& other) const {
     };
 }
 
-lov::Graphics::Transform lov::Graphics::Transform::operator*(const Transform& other) const {
-    // Get rows to be used for multiplication
-    Vector4f row0 = { x[0], y[0], z[0], w[0] };
-    Vector4f row1 = { x[1], y[1], z[1], w[1] };
-    Vector4f row2 = { x[2], y[2], z[2], w[2] };
-    Vector4f row3 = { x[3], y[3], z[3], w[3] };
+bool lov::Graphics::Transform::operator==(const Transform& other) const {
+    return this->x == other.x && this->y == other.y && this->z == other.z && this->w == other.w;
+}
 
-    // Perform matrix calculation
-    return {
-        { Vector::dot(row0, other.x), Vector::dot(row1, other.x), Vector::dot(row2, other.x), Vector::dot(row3, other.x)  },
-        { Vector::dot(row0, other.y), Vector::dot(row1, other.y), Vector::dot(row2, other.y), Vector::dot(row3, other.y)  },
-        { Vector::dot(row0, other.z), Vector::dot(row1, other.z), Vector::dot(row2, other.z), Vector::dot(row3, other.z)  },
-        { Vector::dot(row0, other.w), Vector::dot(row1, other.w), Vector::dot(row2, other.w), Vector::dot(row3, other.w)  }
-    };
+bool lov::Graphics::Transform::operator!=(const Transform& other) const {
+    return !(*this == other);
 }

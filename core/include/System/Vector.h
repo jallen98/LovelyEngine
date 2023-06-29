@@ -85,7 +85,7 @@ namespace lov {
     template <lov_size DIM, typename T>
     VectorT<DIM, T> operator-(const VectorT<DIM, T>& vec);
 
-    /// @brief Check component-wise equality of the given vectors
+    /// @brief Are the given vectors equal component-wise?
     /// @tparam T The type of vector components
     /// @tparam DIM The dimensionality of the vectors
     /// @param left The lefthand vector to check
@@ -93,6 +93,15 @@ namespace lov {
     /// @return Whether the given vectors are equal component-wise
     template <lov_size DIM, typename T>
     bool operator==(const VectorT<DIM, T>& left, const VectorT<DIM, T>& right);
+
+    /// @brief Are the given vectors unequal component-wise?
+    /// @tparam T The type of vector components
+    /// @tparam DIM The dimensionality of the vectors
+    /// @param left The lefthand vector to check
+    /// @param right The righthand vector to check
+    /// @return Whether the given vectors are unequal component-wise
+    template <lov_size DIM, typename T>
+    bool operator!=(const VectorT<DIM, T>& left, const VectorT<DIM, T>& right);
 
     /// @brief A namespace that provides static functions for vector arithmetic
     namespace Vector {

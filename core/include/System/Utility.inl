@@ -22,5 +22,9 @@ namespace lov {
             // If signs match, return whether the difference between the integer representations is less than or equal to max ULPs
             return abs(bitsLeft.i - bitsRight.i) <= maxUlpDiff;
         }
+
+        float toRadians(float degrees) {
+            return degrees * (M_PIf / 180.0f);
+        }
     }
 }

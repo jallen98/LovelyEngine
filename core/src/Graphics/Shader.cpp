@@ -75,3 +75,7 @@ void lov::Graphics::Shader::setUniformInt(const char* name, int value) {
 void lov::Graphics::Shader::setUniformFloat(const char* name, float value) {
     glUniform1f(glGetUniformLocation(m_id, name), value);
 }
+
+void lov::Graphics::Shader::setUniformTransform(const char* name, const Transform& value) {
+    glUniformMatrix4fv(glGetUniformLocation(m_id, name), 1, GL_FALSE, &value[0][0]);
+}

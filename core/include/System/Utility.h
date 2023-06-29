@@ -45,6 +45,11 @@ namespace lov {
         /// @return Whether the given floats are almost equal
         ///
         static bool almostEqual(float left, float right, int maxUlpDiff = 4);
+
+        /// @brief Converts the given angle in degrees to radians
+        /// @param degrees The angle in degrees
+        /// @return The angle in radians
+        static float toRadians(float degrees);
     }
 }
 

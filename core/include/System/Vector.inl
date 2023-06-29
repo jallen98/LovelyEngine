@@ -97,6 +97,11 @@ namespace lov {
         return true;
     }
 
+    template <lov_size DIM, typename T>
+    bool operator!=(const VectorT<DIM, T>& left, const VectorT<DIM, T>& right) {
+        return !(left == right);
+    }
+
     namespace Vector {
         template <lov_size DIM, typename T>
         T dot(const VectorT<DIM, T>& left, const VectorT<DIM, T>& right) {

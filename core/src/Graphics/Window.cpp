@@ -19,6 +19,9 @@ lov::Graphics::Window::Window(unsigned int width, unsigned int height, const std
     glfwSetFramebufferSizeCallback(m_window, [](GLFWwindow* window, int frameBufferWidth, int frameBufferHeight) {
         glViewport(0, 0, frameBufferWidth, frameBufferHeight);
     });
+
+    // Enable depth testing
+    glEnable(GL_DEPTH_TEST);
 }
 
 lov::Graphics::Window::~Window() {
@@ -39,7 +42,7 @@ void lov::Graphics::Window::setClearColor(float red, float green, float blue, fl
 
 void lov::Graphics::Window::clear() {
     // Clear buffers
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void lov::Graphics::Window::update() {

@@ -6,16 +6,22 @@
 #include "Graphics/ElementBuffer.h"
 #include "System/Vector.h"
 #include "Graphics/Transform.h"
+#include "Graphics/Camera.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <algorithm>
 #include <iostream>
+
+#include <fstream>
 
 int main() {
     lov::Graphics::Window window(800, 600, "Lovely Engine");
+    lov::Graphics::Camera cam({ 0.0f, 0.0f, 3.0f }, { 0.0f, 1.0f, 0.0f }, 0.0f, -90.0f);
 
     window.setClearColor(0.2f, 0.3f, 0.3f);
+    window.hideCursor(true);
 
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -97,14 +103,12 @@ int main() {
     lov::Graphics::Texture faceTexture("/home/jallen/LovelyEngine/res/Textures/awesomeface.png");
     faceTexture.bind(1);
 
-    lov::Graphics::Transform view;
-    view = view.translate(0.0f, 0.0f, -3.0f);
-    shader.setUniformTransform("view", view);
-
-    lov::Graphics::Transform projection(lov::Util::toRadians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+    lov::Graphics::Transform projection = lov::Graphics::Transform::perspective(lov::Util::toRadians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
     shader.setUniformTransform("projection", projection);
 
     while(window.isOpen()) {
+        float deltaTime = window.getDeltaTime();
+
         if (window.getKeyState(lov::Input::KEY_ESCAPE)) {
             window.close();
         }
@@ -112,6 +116,18 @@ int main() {
 
         woodTexture.bind(0);
         faceTexture.bind(1);
+
+        float cameraSpeed = 2.5f * deltaTime;
+        if (window.getKeyState(lov::Input::KEY_W) == lov::Input::KEY_PRESS) cam.move(cam.getFront(), cameraSpeed);
+        if (window.getKeyState(lov::Input::KEY_S) == lov::Input::KEY_PRESS) cam.move(-cam.getFront(), cameraSpeed);
+        if (window.getKeyState(lov::Input::KEY_A) == lov::Input::KEY_PRESS) cam.move(-cam.getRight(), cameraSpeed);
+        if (window.getKeyState(lov::Input::KEY_D) == lov::Input::KEY_PRESS) cam.move(cam.getRight(), cameraSpeed);
+
+        float mouseSens = 0.1f;
+        lov::Vector2f c = window.getCursorOffset();
+        cam.rotate(c.x, c.y, mouseSens);
+
+        shader.setUniformTransform("view", cam.getViewMatrix());
 
         for (int i = 0; i < 10; i++) {
             lov::Graphics::Transform model;

@@ -42,22 +42,6 @@ namespace lov {
                 float z0, float z1, float z2, float z3,
                 float w0, float w1, float w2, float w3);
 
-            /// @brief Construct this Transform as an Orthographic Projection
-            /// @param left Left coordinate of the frustum
-            /// @param right Right coordinate of the frustum
-            /// @param bottom Bottom coordinate of the frustum
-            /// @param top Top coordinate of the frustum
-            /// @param near The near plane of the frustum
-            /// @param far The far plane of the frustum
-            Transform(float left, float right, float bottom, float top, float near, float far);
-
-            /// @brief Construct this Transform as a Perspective Projection
-            /// @param fov Field of view of the viewspace
-            /// @param aspect Aspect ratio of the viewspace
-            /// @param near Near plane of the frustum
-            /// @param far Far plane of the frustum
-            Transform(float fov, float aspect, float near, float far);
-
             Vector4f x; ///< First column of this Transform
             Vector4f y; ///< Second column of this Transform
             Vector4f z; ///< Third column of this Transform
@@ -66,6 +50,31 @@ namespace lov {
             /// @brief Static function to get the identity matrix
             /// @return The identity matrix
             static Transform identity();
+
+            /// @brief Creates an Orthographic Projection transform
+            /// @param left Left coordinate of the frustum
+            /// @param right Right coordinate of the frustum
+            /// @param bottom Bottom coordinate of the frustum
+            /// @param top Top coordinate of the frustum
+            /// @param near The near plane of the frustum
+            /// @param far The far plane of the frustum
+            /// @return The orthographic projection
+            static Transform orthographic(float left, float right, float bottom, float top, float near, float far);
+
+            /// @brief Creates a Perspective Projection transform
+            /// @param fov Field of view of the viewspace
+            /// @param aspect Aspect ratio of the viewspace
+            /// @param near Near plane of the frustum
+            /// @param far Far plane of the frustum
+            /// @return The perspective projection
+            static Transform perspective(float fov, float aspect, float near, float far);
+
+            /// @brief Creates a lookAt view transform from the given position to the given target
+            /// @param position The origin point for the lookAt transform
+            /// @param target The target point for the lookAt transform
+            /// @param up Up direction in view space
+            /// @return The lookAt view transform
+            static Transform lookAt(const Vector3f& position, const Vector3f& target, const Vector3f& up);
 
             /// @brief Translate this Transform by the given translation vector
             /// @param translation The translation vector

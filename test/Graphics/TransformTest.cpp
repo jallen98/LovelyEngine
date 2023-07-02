@@ -95,7 +95,7 @@ TEST_F(TransformFixture, VectorConstruction) {
     ASSERT_EQ(actual[3], col4);
 }
 
-/// @brief Test orthographic projection matrix construction
+/// @brief Test orthographic projection matrix
 TEST_F(TransformFixture, OrthographicProjection) {
     float left = 0.0f;
     float right = 800.0f;
@@ -104,7 +104,7 @@ TEST_F(TransformFixture, OrthographicProjection) {
     float near = 0.1f;
     float far = 100.0f;
 
-    lov::Graphics::Transform actual(left, right, bottom, top, near, far);
+    lov::Graphics::Transform actual = lov::Graphics::Transform::orthographic(left, right, bottom, top, near, far);
     lov::Graphics::Transform expected = TransformFixture::getExpectedOrthographic(left, right, bottom, top, near, far);
 
     ASSERT_EQ(actual, expected);
@@ -119,7 +119,7 @@ TEST_F(TransformFixture, OrthographicProjectionNonZero) {
     float near = 12.1f;
     float far = 100.0f;
 
-    lov::Graphics::Transform actual(left, right, bottom, top, near, far);
+    lov::Graphics::Transform actual = lov::Graphics::Transform::orthographic(left, right, bottom, top, near, far);
     lov::Graphics::Transform expected = TransformFixture::getExpectedOrthographic(left, right, bottom, top, near, far);
 
     ASSERT_EQ(actual, expected);
@@ -132,7 +132,7 @@ TEST_F(TransformFixture, PerspectiveProjection) {
     float near = 0.1f;
     float far = 100.0f;
 
-    lov::Graphics::Transform actual(fov, aspect, near, far);
+    lov::Graphics::Transform actual = lov::Graphics::Transform::perspective(fov, aspect, near, far);
     lov::Graphics::Transform expected = TransformFixture::getExpectedPerspective(fov, aspect, near, far);
 
     ASSERT_EQ(actual, expected);

@@ -23,32 +23,6 @@ lov::Graphics::Transform::Transform(float x0, float x1, float x2, float x3, floa
     w(w0, w1, w2, w3)
 {}
 
-lov::Graphics::Transform::Transform(float left, float right, float bottom, float top, float near, float far) {
-    // Initialize this transform as the identity matrix
-    *this = Transform::identity();
-
-    // Set values, reference for calculations: http://www.songho.ca/opengl/gl_projectionmatrix.html
-    x[0] = 2.0f / (right - left);
-    y[1] = 2.0f / (top - bottom);
-    z[2] = -2.0f / (far - near);
-    w[0] = -(right + left) / (right - left);
-    w[1] = -(top + bottom) / (top - bottom);
-    w[2] = -(far + near) / (far - near);
-}
-
-lov::Graphics::Transform::Transform(float fov, float aspect, float near, float far) {
-    // Initialize this transform as the identity matrix
-    *this = Transform::identity();
-
-    // Set values, reference for calculations: http://www.songho.ca/opengl/gl_projectionmatrix.html
-    x[0] = 1.0f / (aspect * tanf(fov / 2.0f));
-    y[1] = 1.0f / (tanf(fov / 2.0f));
-    z[2] = -(far + near) / (far - near);
-    z[3] = -1.0f;
-    w[2] = (-2.0f * far * near) / (far - near);
-    w[3] = 0.0f;
-}
-
 lov::Graphics::Transform lov::Graphics::Transform::identity() {
     // Build the identity matrix
     return {
@@ -58,6 +32,57 @@ lov::Graphics::Transform lov::Graphics::Transform::identity() {
         { 0.0f, 0.0f, 0.0f, 1.0f }
     };
 }
+
+lov::Graphics::Transform lov::Graphics::Transform::orthographic(float left, float right, float bottom, float top, float near, float far) {
+    Transform ortho;
+
+    // Set values, reference for calculations: http://www.songho.ca/opengl/gl_projectionmatrix.html
+    ortho[0][0] = 2.0f / (right - left);
+    ortho[1][1] = 2.0f / (top - bottom);
+    ortho[2][2] = -2.0f / (far - near);
+    ortho[3][0] = -(right + left) / (right - left);
+    ortho[3][1] = -(top + bottom) / (top - bottom);
+    ortho[3][2] = -(far + near) / (far - near);
+
+    return ortho;
+}
+
+lov::Graphics::Transform lov::Graphics::Transform::perspective(float fov, float aspect, float near, float far) {
+    Transform perspective;
+
+    // Set values, reference for calculations: http://www.songho.ca/opengl/gl_projectionmatrix.html
+    perspective[0][0] = 1.0f / (aspect * tanf(fov / 2.0f));
+    perspective[1][1] = 1.0f / (tanf(fov / 2.0f));
+    perspective[2][2] = -(far + near) / (far - near);
+    perspective[2][3] = -1.0f;
+    perspective[3][2] = (-2.0f * far * near) / (far - near);
+    perspective[3][3] = 0.0f;
+
+    return perspective;
+}
+
+lov::Graphics::Transform lov::Graphics::Transform::lookAt(const Vector3f& position, const Vector3f& target, const Vector3f& up) {
+    Vector3f cameraDir = Vector::normalize(position - target);
+    Vector3f cameraRight = Vector::normalize(Vector::cross(up, cameraDir));
+    Vector3f cameraUp = Vector::cross(cameraDir, cameraRight);
+
+    Transform lookAt;
+    lookAt[0][0] = cameraRight.x;
+    lookAt[1][0] = cameraRight.y;
+    lookAt[2][0] = cameraRight.z;
+    lookAt[0][1] = cameraUp.x;
+    lookAt[1][1] = cameraUp.y;
+    lookAt[2][1] = cameraUp.z;
+    lookAt[0][2] = cameraDir.x;
+    lookAt[1][2] = cameraDir.y;
+    lookAt[2][2] = cameraDir.z;
+    lookAt[3][0] = -Vector::dot(cameraRight, position);
+    lookAt[3][1] = -Vector::dot(cameraUp, position);
+    lookAt[3][2] = -Vector::dot(cameraDir, position);
+
+    return lookAt;
+}
+
 lov::Graphics::Transform lov::Graphics::Transform::translate(const Vector3f& translation) const {
     return translate(translation.x, translation.y, translation.z);
 }

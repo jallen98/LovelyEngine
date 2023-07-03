@@ -17,6 +17,8 @@ My goto resource while developing the graphics pipeline
 A physical book of the above website, that I purchased a few years ago and still use to this day. It's an excellent resource
 - [SFML Game Development by Example](https://www.amazon.com/SFML-Development-Example-Raimondas-Pupius/dp/1785287346/ref=asc_df_1785287346/?tag=hyprod-20&linkCode=df0&hvadid=312140868236&hvpos=&hvnetw=g&hvrand=10245637400762425020&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9003344&hvtargid=pla-662180708592&psc=1)  
 This resource isn't used in this project, but I thought it was worth mentioning. I purchased it in high school to kick off this journey.
+- [Projection Matrix Calculation](http://www.songho.ca/opengl/gl_projectionmatrix.html)  
+Useful resource for some projection matrix calculations
 
 # Licenses  
 Special thanks to all libraries used in this project, their licenses and git repos are linked below

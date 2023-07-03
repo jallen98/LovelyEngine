@@ -76,6 +76,10 @@ void lov::Graphics::Shader::setUniformFloat(const char* name, float value) {
     glUniform1f(glGetUniformLocation(m_id, name), value);
 }
 
+void lov::Graphics::Shader::setUniformVector3(const char* name, const Vector3f& value) {
+    glUniform3fv(glGetUniformLocation(m_id, name), 1, &value[0]);
+}
+
 void lov::Graphics::Shader::setUniformTransform(const char* name, const Transform& value) {
     glUniformMatrix4fv(glGetUniformLocation(m_id, name), 1, GL_FALSE, &value[0][0]);
 }

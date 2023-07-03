@@ -45,6 +45,11 @@ namespace lov {
             /// @param value Value to set
             void setUniformFloat(const char* name, float value);
 
+            /// @brief Set a uniform Vector3f with the given name and value
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            void setUniformVector3(const char* name, const Vector3f& value);
+
             /// @brief Set a uniform transform with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set

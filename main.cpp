@@ -7,6 +7,7 @@
 #include "System/Vector.h"
 #include "Graphics/Transform.h"
 #include "Graphics/Camera.h"
+#include "Graphics/Material.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -19,70 +20,73 @@
 int main() {
     lov::Graphics::Window window(800, 600, "Lovely Engine");
     lov::Graphics::Camera cam({ 0.0f, 0.0f, 3.0f }, { 0.0f, 1.0f, 0.0f }, 0.0f, -90.0f);
+    cam.clampPitch(true);
 
-    window.setClearColor(0.2f, 0.3f, 0.3f);
+    window.setClearColor(0.1f, 0.1f, 0.1f);
     window.hideCursor(true);
 
     float vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        // positions          // normals           // texture coords
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
 
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
     };
 
-    lov::Vector3f cubePositions[] = {
-        lov::Vector3f( 0.0f,  0.0f,  0.0f),
-        lov::Vector3f( 2.0f,  5.0f, -15.0f),
-        lov::Vector3f(-1.5f, -2.2f, -2.5f),
-        lov::Vector3f(-3.8f, -2.0f, -12.3f),
-        lov::Vector3f( 2.4f, -0.4f, -3.5f),
-        lov::Vector3f(-1.7f,  3.0f, -7.5f),
-        lov::Vector3f( 1.3f, -2.0f, -2.5f),
-        lov::Vector3f( 1.5f,  2.0f, -2.5f),
-        lov::Vector3f( 1.5f,  0.2f, -1.5f),
-        lov::Vector3f(-1.3f,  1.0f, -1.5f)
-    };
+    lov::Graphics::Texture containerDiffuse("/home/jallen/LovelyEngine/res/Textures/container_diffuse.png");
+    lov::Graphics::Texture containerSpecular("/home/jallen/LovelyEngine/res/Textures/container_specular.png");
 
-    lov::Graphics::Shader shader;
-    shader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
-    shader.bind();
+    lov::Graphics::Material containerMaterial;
+    containerMaterial.diffuseMapID = containerDiffuse.getID();
+    containerMaterial.specularMapID = containerSpecular.getID();
+
+    lov::Graphics::Transform cubeTransform;
+    lov::Graphics::Transform lightTransform;
+
+    lightTransform = lightTransform.translate(1.2f, 1.0f, 2.0f).scale(0.2f, 0.2f, 0.2f);
+
+    lov::Graphics::Shader mainShader;
+    mainShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
+
+    lov::Graphics::Shader lightShader;
+    lightShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/light.vs", "/home/jallen/LovelyEngine/res/Shaders/light.fs");
 
     lov::Graphics::VertexArray vao;
     lov::Graphics::VertexBuffer vbo;
@@ -91,20 +95,28 @@ int main() {
     vbo.bind();
     vbo.bufferData(vertices, sizeof(vertices));
 
-    vao.linkAttribute(0, 3, lov::LOV_FLOAT, 5 * sizeof(float), 0);
-    vao.linkAttribute(1, 2, lov::LOV_FLOAT, 5 * sizeof(float), 3 * sizeof(float));
-
-    shader.setUniformInt("texture1", 0);
-    shader.setUniformInt("texture2", 1);
-
-    lov::Graphics::Texture woodTexture("/home/jallen/LovelyEngine/res/Textures/container.jpg");
-    woodTexture.bind(0);
-
-    lov::Graphics::Texture faceTexture("/home/jallen/LovelyEngine/res/Textures/awesomeface.png");
-    faceTexture.bind(1);
+    vao.linkAttribute(0, 3, lov::LOV_FLOAT, 8 * sizeof(float), 0);
+    vao.linkAttribute(1, 3, lov::LOV_FLOAT, 8 * sizeof(float), 3 * sizeof(float));
+    vao.linkAttribute(2, 2, lov::LOV_FLOAT, 8 * sizeof(float), 6 * sizeof(float));
 
     lov::Graphics::Transform projection = lov::Graphics::Transform::perspective(lov::Util::toRadians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-    shader.setUniformTransform("projection", projection);
+
+    mainShader.bind();
+    mainShader.setUniformTransform("model", cubeTransform);
+    mainShader.setUniformTransform("projection", projection);
+
+    mainShader.setUniformVector3("light.position", { 1.2f, 1.0f, 2.0f });
+    mainShader.setUniformVector3("light.ambient", { 0.2f, 0.2f, 0.2f });
+    mainShader.setUniformVector3("light.diffuse", { 0.5f, 0.5f, 0.5f });
+    mainShader.setUniformVector3("light.specular", { 1.0f, 1.0f, 1.0f });
+
+    mainShader.setUniformInt("material.diffuse", 0);
+    mainShader.setUniformInt("material.specular", 1);
+    mainShader.setUniformFloat("material.shininess", 64.0f);
+
+    lightShader.bind();
+    lightShader.setUniformTransform("model", lightTransform);
+    lightShader.setUniformTransform("projection", projection);
 
     while(window.isOpen()) {
         float deltaTime = window.getDeltaTime();
@@ -113,9 +125,6 @@ int main() {
             window.close();
         }
         window.clear();
-
-        woodTexture.bind(0);
-        faceTexture.bind(1);
 
         float cameraSpeed = 2.5f * deltaTime;
         if (window.getKeyState(lov::Input::KEY_W) == lov::Input::KEY_PRESS) cam.move(cam.getFront(), cameraSpeed);
@@ -127,17 +136,21 @@ int main() {
         lov::Vector2f c = window.getCursorOffset();
         cam.rotate(c.x, c.y, mouseSens);
 
-        shader.setUniformTransform("view", cam.getViewMatrix());
+        containerDiffuse.bind(0);
+        containerSpecular.bind(1);
 
-        for (int i = 0; i < 10; i++) {
-            lov::Graphics::Transform model;
-            model = model.translate(cubePositions[i]);
-            float angle = 20.0f * i;
-            model = model.rotate(1.0f, 0.3f, 0.5f, lov::Util::toRadians(angle));
-            shader.setUniformTransform("model", model);
+        mainShader.bind();
+        mainShader.setUniformTransform("view", cam.getViewMatrix());
 
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
+        lightShader.bind();
+        lightShader.setUniformTransform("view", cam.getViewMatrix());
+
+        mainShader.bind();
+        mainShader.setUniformVector3("cameraPos", cam.getPosition());
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        lightShader.bind();
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
         window.update();
     }

@@ -11,7 +11,7 @@ I normally keep my personal projects private, but I'm in the job market and want
 # LovelyEngine - What is it?
 While this repo and iteration of this project is new, I've been working on this project for over 5 years as a passion and learning project. To keep my design and development skills sharp, I work on this project after work, on weekends, etc. Often times when I come back to it, I'll restart the project (hence this recently created repo) with a fresh lens and stronger development skills from my career.
 
-The LovelyEngine is an OpenGL game engine, using GLFW and GLAD for developing the graphics pipeline and an Entity Component System for managing objects. The raw software development skills come from my education and career, while the graphics and game engine knowledge comes from numerous books and websites, which are listed below. I've been developing game engines in my free time since high school, with a focus on growth and learning outside school and work.
+The LovelyEngine is an OpenGL game engine, using GLFW and GLAD for developing the graphics pipeline and an Entity Component System for managing objects (not yet implemented in this iteration). The raw software development skills come from my education and career, while the graphics and game engine knowledge comes from numerous books and websites, which are listed below. I've been developing game engines in my free time since high school, with a focus on growth and learning outside school and work.
 
 # Screenshots
 ![ ](https://github.com/jallen98/LovelyEngine/blob/develop/res/Demos/light_demo.gif)

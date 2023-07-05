@@ -10,3 +10,6 @@ const char* lov::Exceptions::Exception::what() const noexcept {
 
 lov::Exceptions::ShaderException::ShaderException(const char* message): Exception(message) {}
 lov::Exceptions::ShaderException::ShaderException(const std::string& message): Exception(message) {}
+
+lov::Exceptions::WindowException::WindowException(const char* message): Exception(message) {}
+lov::Exceptions::WindowException::WindowException(const std::string& message): Exception(message) {}

@@ -1,5 +1,7 @@
 #include "Graphics/Window.h"
 
+#include "System/Exceptions.h"
+
 lov::Graphics::Window::Window(unsigned int width, unsigned int height, const std::string& title):
     m_mousePos(0.0f, 0.0f),
     m_previousMousePos(0.0f, 0.0f),
@@ -15,10 +17,18 @@ lov::Graphics::Window::Window(unsigned int width, unsigned int height, const std
 
     // Create GLFW Window
     m_window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+
+    if (m_window == NULL) {
+        glfwTerminate();
+        throw Exceptions::WindowException("Failed to create lov::Graphics::Window");
+    }
+
     this->makeCurrent();
 
     // Load GLAD
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        throw Exceptions::WindowException("Failed to load OpenGL function pointers");
+    }
 
     // Set viewport
     glViewport(0, 0, width, height);

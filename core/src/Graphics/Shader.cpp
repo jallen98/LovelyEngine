@@ -95,22 +95,22 @@ void lov::Graphics::Shader::compileFromFiles(const std::string& vertexShaderPath
     compileFromText(vertexShaderSource.c_str(), fragmentShaderSource.c_str());
 }
 
-void lov::Graphics::Shader::setUniformBool(const std::string& name, bool value) {
-    setUniformInt(name, value);
-}
-
-void lov::Graphics::Shader::setUniformInt(const std::string& name, int value) {
+void lov::Graphics::Shader::setUniform(const std::string& name, bool value) {
     glUniform1i(glGetUniformLocation(m_id, name.c_str()), value);
 }
 
-void lov::Graphics::Shader::setUniformFloat(const std::string& name, float value) {
+void lov::Graphics::Shader::setUniform(const std::string& name, int value) {
+    glUniform1i(glGetUniformLocation(m_id, name.c_str()), value);
+}
+
+void lov::Graphics::Shader::setUniform(const std::string& name, float value) {
     glUniform1f(glGetUniformLocation(m_id, name.c_str()), value);
 }
 
-void lov::Graphics::Shader::setUniformVector3(const std::string& name, const Vector3f& value) {
+void lov::Graphics::Shader::setUniform(const std::string& name, const Vector3f& value) {
     glUniform3fv(glGetUniformLocation(m_id, name.c_str()), 1, &value[0]);
 }
 
-void lov::Graphics::Shader::setUniformTransform(const std::string& name, const Transform& value) {
+void lov::Graphics::Shader::setUniform(const std::string& name, const Transform& value) {
     glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_FALSE, &value[0][0]);
 }

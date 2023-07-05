@@ -21,6 +21,10 @@ namespace lov {
             /// @brief Unbind this Texture from the OpenGL state
             void unbind() const;
 
+            /// @brief Get the OpenGL ID of this texture
+            /// @return The ID of this texture
+            lov_uint getID() const;
+
         private:
             /// @brief The ID of this Texture
             lov_uint m_id;

@@ -43,3 +43,7 @@ void lov::Graphics::Texture::unbind() const {
     // Unbind this texture
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+lov::lov_uint lov::Graphics::Texture::getID() const {
+    return m_id;
+}

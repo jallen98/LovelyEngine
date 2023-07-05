@@ -82,6 +82,12 @@ namespace lov {
             /// @param z The z component of this camera's target
             void setTarget(float x, float y, float z);
 
+            /// @brief Clamp the pitch value
+            /// @param clamp Whether to clamp pitch
+            /// @param low Minimum pitch value, default -89.0
+            /// @param hight Maximum pitch value, default 89.0
+            void clampPitch(bool clamp, float low = -89.0f, float high = 89.0f);
+
             /// @brief Get the position of this camera
             /// @return This camera's position
             Vector3f getPosition() const;
@@ -127,6 +133,10 @@ namespace lov {
 
             float m_pitch; ///< The pitch of this camera
             float m_yaw; ///< The yaw of this camera
+
+            bool m_clampPitch; ///< Should the pitch be clamped?
+            float m_pitchLow; ///< Minimum value of pitch if clamp enabled
+            float m_pitchHigh; ///< Maximum value of pitch if clamp enabled
 
             Vector3f m_target; ///< The target of this camera
             bool m_lockTarget; ///< Is this camera locked onto the target?

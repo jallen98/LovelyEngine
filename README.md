@@ -14,8 +14,9 @@ While this repo and iteration of this project is new, I've been working on this 
 The LovelyEngine is an OpenGL game engine, using GLFW and GLAD for developing the graphics pipeline and an Entity Component System for managing objects (not yet implemented in this iteration). The raw software development skills come from my education and career, while the graphics and game engine knowledge comes from numerous books and websites, which are listed below. I've been developing game engines in my free time since high school, with a focus on growth and learning outside school and work.
 
 # Screenshots
-![ ](https://github.com/jallen98/LovelyEngine/blob/develop/res/Demos/light_demo.gif)
 ![ ](https://github.com/jallen98/LovelyEngine/blob/develop/res/Demos/cubes.PNG)
+![ ](https://github.com/jallen98/LovelyEngine/blob/develop/res/Demos/light_demo.gif)
+![ ](https://github.com/jallen98/LovelyEngine/blob/develop/res/Demos/multiple_lights.gif)
 
 # References
 - [Learn OpenGL](https://learnopengl.com)

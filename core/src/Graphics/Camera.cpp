@@ -2,6 +2,7 @@
 
 #include "System/Utility.h"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 
@@ -10,6 +11,9 @@ lov::Graphics::Camera::Camera(const Vector3f& position, const Vector3f& worldUp,
     m_worldUp(worldUp),
     m_pitch(pitch),
     m_yaw(yaw),
+    m_clampPitch(false),
+    m_pitchLow(-89.0f),
+    m_pitchHigh(89.0f),
     m_lockTarget(false)
 {
     this->calculateViewMatrix();
@@ -19,6 +23,9 @@ lov::Graphics::Camera::Camera(const Vector3f& position, const Vector3f& worldUp,
     m_position(position),
     m_worldUp(worldUp),
     m_target(target),
+    m_clampPitch(false),
+    m_pitchLow(-89.0f),
+    m_pitchHigh(89.0f),
     m_lockTarget(true)
 {
     this->calculateViewMatrix();
@@ -36,6 +43,11 @@ void lov::Graphics::Camera::move(float x, float y, float z, float velocity) {
 void lov::Graphics::Camera::rotate(float yawOffset, float pitchOffset, float sensitivity) {
     m_yaw += yawOffset * sensitivity;
     m_pitch += pitchOffset * sensitivity;
+
+    if (m_clampPitch) {
+        m_pitch = std::clamp(m_pitch, m_pitchLow, m_pitchHigh);
+    }
+
     this->calculateViewMatrix();
 }
 
@@ -60,6 +72,11 @@ void lov::Graphics::Camera::setWorldUp(float x, float y, float z) {
 void lov::Graphics::Camera::setRotation(float yaw, float pitch) {
     m_yaw = yaw;
     m_pitch = pitch;
+
+    if (m_clampPitch) {
+        m_pitch = std::clamp(m_pitch, m_pitchLow, m_pitchHigh);
+    }
+
     this->calculateViewMatrix();
 }
 
@@ -71,6 +88,12 @@ void lov::Graphics::Camera::shouldLockTarget(bool lockOn) {
 void lov::Graphics::Camera::setTarget(const Vector3f& target) {
     m_target = target;
     this->calculateViewMatrix();
+}
+
+void lov::Graphics::Camera::clampPitch(bool clamp, float low, float high) {
+    m_clampPitch = clamp;
+    m_pitchLow = low;
+    m_pitchHigh = high;
 }
 
 void lov::Graphics::Camera::setTarget(float x, float y, float z) {

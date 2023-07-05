@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "Graphics/Transform.h"
 #include "System/Types.h"
 
@@ -28,27 +30,32 @@ namespace lov {
             /// @brief Load a shader from files
             /// @param vertexShaderPath Path to the vertex shader source
             /// @param fragmentShaderPath Path to the fragment shader source
-            void compileFromFiles(const char* vertexShaderPath, const char* fragmentShaderPath);
+            void compileFromFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
 
             /// @brief Set a uniform boolean with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformBool(const char* name, bool value);
+            void setUniformBool(const std::string& name, bool value);
 
             /// @brief Set a uniform integer with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformInt(const char* name, int value);
+            void setUniformInt(const std::string& name, int value);
 
             /// @brief Set a uniform float with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformFloat(const char* name, float value);
+            void setUniformFloat(const std::string& name, float value);
+
+            /// @brief Set a uniform Vector3f with the given name and value
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            void setUniformVector3(const std::string& name, const Vector3f& value);
 
             /// @brief Set a uniform transform with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformTransform(const char* name, const Transform& value);
+            void setUniformTransform(const std::string& name, const Transform& value);
 
         private:
             /// @brief ID for this shader program

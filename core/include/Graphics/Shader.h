@@ -10,9 +10,6 @@
 
 namespace lov {
     namespace Graphics {
-        template <typename T>
-        using Uniform = std::pair<std::string, T>;
-
         /// @brief An OpenGL shader that can be loaded with strings or files
         class Shader {
         public:

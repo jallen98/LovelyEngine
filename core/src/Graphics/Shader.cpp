@@ -4,7 +4,9 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <iostream>
+
+#include "System/Exceptions.h"
+
 lov::Graphics::Shader::~Shader() {
     // Delete the OpenGL shader program
     glDeleteProgram(m_id);
@@ -21,24 +23,36 @@ void lov::Graphics::Shader::unbind() const {
 }
 
 void lov::Graphics::Shader::compileFromText(const char* vertexShaderSource, const char* fragmentShaderSource) {
+    // Variables used to track compile status
+    int compileSuccess;
+    char compileInfoLog[512];
+
+    // Variables used to track link status
+    int linkSuccess;
+    char linkInfoLog[512];
+
     // Compile the vertex shader
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
 
-
-    int success;
-    char infoLog[512];
+    // Check vertex shader status
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &compileSuccess);
+    if (!compileSuccess) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, compileInfoLog);
+        throw lov::Exceptions::ShaderException("Exception while compiling vertex shader: " + std::string(compileInfoLog));
+    }
 
     // Compile the fragment shader
     unsigned int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragShader);
 
-    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragShader, 512, NULL, infoLog);
-        std::cout << infoLog << std::endl;
+    // Check fragment shader status
+    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &compileSuccess);
+    if (!compileSuccess) {
+        glGetShaderInfoLog(fragShader, 512, NULL, compileInfoLog);
+        throw lov::Exceptions::ShaderException("Exception while compiling fragment shader: " + std::string(compileInfoLog));
     }
 
     // Link the shader program
@@ -46,6 +60,13 @@ void lov::Graphics::Shader::compileFromText(const char* vertexShaderSource, cons
     glAttachShader(m_id, vertexShader);
     glAttachShader(m_id, fragShader);
     glLinkProgram(m_id);
+
+    // Check link status
+    glGetProgramiv(m_id, GL_LINK_STATUS, &linkSuccess);
+    if (!linkSuccess) {
+        glGetProgramInfoLog(m_id, 512, NULL, linkInfoLog);
+        throw lov::Exceptions::ShaderException("Exception while linking shader program: " + std::string(linkInfoLog));
+    }
 
     // Cleanup
     glDeleteShader(vertexShader);

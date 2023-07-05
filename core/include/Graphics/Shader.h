@@ -25,11 +25,13 @@ namespace lov {
             /// @brief Load a shader from text
             /// @param vertexShaderSource The source code of the vertex shader
             /// @param fragmentShaderSource The source code of the fragment shader
+            /// @throws #lov::Exceptions::ShaderException if compile or linking fails
             void compileFromText(const char* vertexShaderSource, const char* fragmentShaderSource);
 
             /// @brief Load a shader from files
             /// @param vertexShaderPath Path to the vertex shader source
             /// @param fragmentShaderPath Path to the fragment shader source
+            /// @throws #lov::Exceptions::ShaderException if compile or linking fails
             void compileFromFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
 
             /// @brief Set a uniform boolean with the given name and value

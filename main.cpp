@@ -8,6 +8,7 @@
 #include "Graphics/Transform.h"
 #include "Graphics/Camera.h"
 #include "Graphics/Material.h"
+#include "System/Exceptions.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -102,10 +103,20 @@ int main() {
     containerMaterial.specularMapID = containerSpecular.getID();
 
     lov::Graphics::Shader mainShader;
-    mainShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
+    try {
+        mainShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
+    }
+    catch (lov::Exceptions::ShaderException e) {
+        std::cout << "Failed to compile main shader: " << e.what() << std::endl;
+    }
 
     lov::Graphics::Shader lightShader;
-    lightShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/light.vs", "/home/jallen/LovelyEngine/res/Shaders/light.fs");
+    try {
+        lightShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/light.vs", "/home/jallen/LovelyEngine/res/Shaders/light.fs");
+    }
+    catch (lov::Exceptions::ShaderException e) {
+        std::cout << "Failed to compile light shader: " << e.what() << std::endl;
+    }
 
     lov::Graphics::VertexArray vao;
     lov::Graphics::VertexBuffer vbo;

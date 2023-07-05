@@ -134,48 +134,48 @@ int main() {
     mainShader.bind();
 
     // Set projection matrix
-    mainShader.setUniformTransform("projection", projection);
+    mainShader.setUniform("projection", projection);
 
     // Set point lights
     for (int i = 0; i < 4; i++) {
         std::string indexedLight = "pointLights[" + std::to_string(i) + "]";
 
-        mainShader.setUniformVector3(indexedLight + ".position", pointLightPositions[i]);
+        mainShader.setUniform(indexedLight + ".position", pointLightPositions[i]);
 
-        mainShader.setUniformVector3(indexedLight + ".ambient", lov::Vector3f(0.05f, 0.05f, 0.05f));
-        mainShader.setUniformVector3(indexedLight + ".diffuse", lov::Vector3f(0.8f, 0.8f, 0.8f));
-        mainShader.setUniformVector3(indexedLight + ".specular", lov::Vector3f(1.0f, 1.0f, 1.0f));
+        mainShader.setUniform(indexedLight + ".ambient", lov::Vector3f(0.05f, 0.05f, 0.05f));
+        mainShader.setUniform(indexedLight + ".diffuse", lov::Vector3f(0.8f, 0.8f, 0.8f));
+        mainShader.setUniform(indexedLight + ".specular", lov::Vector3f(1.0f, 1.0f, 1.0f));
 
-        mainShader.setUniformFloat(indexedLight + ".attenuationConstant", attenuationConstant);
-        mainShader.setUniformFloat(indexedLight + ".attenuationLinear", attenuationLinear);
-        mainShader.setUniformFloat(indexedLight + ".attenuationQuadratic", attenuationQuadratic);
+        mainShader.setUniform(indexedLight + ".attenuationConstant", attenuationConstant);
+        mainShader.setUniform(indexedLight + ".attenuationLinear", attenuationLinear);
+        mainShader.setUniform(indexedLight + ".attenuationQuadratic", attenuationQuadratic);
     }
 
     // Set directional light (the sun)
-    mainShader.setUniformVector3("sun.direction", { -0.2f, -1.0f, -0.3f });
-    mainShader.setUniformVector3("sun.ambient", lov::Vector3f(0.05f, 0.05f, 0.05f));
-    mainShader.setUniformVector3("sun.diffuse", lov::Vector3f(0.4f, 0.4f, 0.4f));
-    mainShader.setUniformVector3("sun.specular", lov::Vector3f(0.5f, 0.5f, 0.5f));
+    mainShader.setUniform("sun.direction", { -0.2f, -1.0f, -0.3f });
+    mainShader.setUniform("sun.ambient", lov::Vector3f(0.05f, 0.05f, 0.05f));
+    mainShader.setUniform("sun.diffuse", lov::Vector3f(0.4f, 0.4f, 0.4f));
+    mainShader.setUniform("sun.specular", lov::Vector3f(0.5f, 0.5f, 0.5f));
 
     // Set flashlight
-    mainShader.setUniformVector3("flashlight.ambient", lov::Vector3f(0.0f, 0.0f, 0.0f));
-    mainShader.setUniformVector3("flashlight.diffuse", lov::Vector3f(1.0f, 1.0f, 1.0f));
-    mainShader.setUniformVector3("flashlight.specular", lov::Vector3f(1.0f, 1.0f, 1.0f));
+    mainShader.setUniform("flashlight.ambient", lov::Vector3f(0.0f, 0.0f, 0.0f));
+    mainShader.setUniform("flashlight.diffuse", lov::Vector3f(1.0f, 1.0f, 1.0f));
+    mainShader.setUniform("flashlight.specular", lov::Vector3f(1.0f, 1.0f, 1.0f));
 
-    mainShader.setUniformFloat("flashlight.innerCutoff", cos(lov::Util::toRadians(12.5f)));
-    mainShader.setUniformFloat("flashlight.outerCutoff", cos(lov::Util::toRadians(17.5f)));
+    mainShader.setUniform("flashlight.innerCutoff", cosf(lov::Util::toRadians(12.5f)));
+    mainShader.setUniform("flashlight.outerCutoff", cosf(lov::Util::toRadians(17.5f)));
 
-    mainShader.setUniformFloat("flashlight.attenuationConstant", attenuationConstant);
-    mainShader.setUniformFloat("flashlight.attenuationLinear", attenuationLinear);
-    mainShader.setUniformFloat("flashlight.attenuationQuadratic", attenuationQuadratic);
+    mainShader.setUniform("flashlight.attenuationConstant", attenuationConstant);
+    mainShader.setUniform("flashlight.attenuationLinear", attenuationLinear);
+    mainShader.setUniform("flashlight.attenuationQuadratic", attenuationQuadratic);
 
     // Set material
-    mainShader.setUniformInt("material.diffuse", 0);
-    mainShader.setUniformInt("material.specular", 1);
-    mainShader.setUniformFloat("material.shininess", 64.0f);
+    mainShader.setUniform("material.diffuse", 0);
+    mainShader.setUniform("material.specular", 1);
+    mainShader.setUniform("material.shininess", 64.0f);
 
     lightShader.bind();
-    lightShader.setUniformTransform("projection", projection);
+    lightShader.setUniform("projection", projection);
 
     while(window.isOpen()) {
         float deltaTime = window.getDeltaTime();
@@ -199,21 +199,21 @@ int main() {
         containerSpecular.bind(1);
 
         mainShader.bind();
-        mainShader.setUniformTransform("view", cam.getViewMatrix());
-        mainShader.setUniformVector3("flashlight.position", cam.getPosition());
-        mainShader.setUniformVector3("flashlight.direction", cam.getFront());
+        mainShader.setUniform("view", cam.getViewMatrix());
+        mainShader.setUniform("flashlight.position", cam.getPosition());
+        mainShader.setUniform("flashlight.direction", cam.getFront());
 
         lightShader.bind();
-        lightShader.setUniformTransform("view", cam.getViewMatrix());
+        lightShader.setUniform("view", cam.getViewMatrix());
 
         mainShader.bind();
         for (int i = 0; i < 10; i++) {
-            mainShader.setUniformVector3("cameraPos", cam.getPosition());
+            mainShader.setUniform("cameraPos", cam.getPosition());
 
             lov::Graphics::Transform containerTransform;
             containerTransform = containerTransform.translate(cubePositions[i]);
             containerTransform = containerTransform.rotate(1.0f, 0.3f, 0.5f, 20.0f * i);
-            mainShader.setUniformTransform("model", containerTransform);
+            mainShader.setUniform("model", containerTransform);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
@@ -223,7 +223,7 @@ int main() {
             lov::Graphics::Transform lightTransform;
             lightTransform = lightTransform.translate(pointLightPositions[i]).scale(0.2f, 0.2f, 0.2f);
 
-            lightShader.setUniformTransform("model", lightTransform);
+            lightShader.setUniform("model", lightTransform);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }

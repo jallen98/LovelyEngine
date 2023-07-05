@@ -4,12 +4,15 @@
 
 #include "Graphics/Transform.h"
 #include "System/Types.h"
-
+#include <iostream>
 /// @file Shader.h
 /// @brief Contains #lov::Graphics::Shader class to create OpenGL shaders
 
 namespace lov {
     namespace Graphics {
+        template <typename T>
+        using Uniform = std::pair<std::string, T>;
+
         /// @brief An OpenGL shader that can be loaded with strings or files
         class Shader {
         public:
@@ -34,30 +37,37 @@ namespace lov {
             /// @throws #lov::Exceptions::ShaderException if compile or linking fails
             void compileFromFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
 
+            /// @brief Undefined but prevents ambiguity with setUniform overloads
+            /// @tparam T The type of uniform to set
+            /// @param name Name of the uniform
+            /// @param value Value to set
+            template <typename T>
+            void setUniform(const std::string& name, T value);
+
             /// @brief Set a uniform boolean with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformBool(const std::string& name, bool value);
+            void setUniform(const std::string& name, bool value);
 
             /// @brief Set a uniform integer with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformInt(const std::string& name, int value);
+            void setUniform(const std::string& name, int value);
 
             /// @brief Set a uniform float with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformFloat(const std::string& name, float value);
+            void setUniform(const std::string& name, float value);
 
             /// @brief Set a uniform Vector3f with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformVector3(const std::string& name, const Vector3f& value);
+            void setUniform(const std::string& name, const Vector3f& value);
 
             /// @brief Set a uniform transform with the given name and value
             /// @param name Name of the uniform
             /// @param value Value to set
-            void setUniformTransform(const std::string& name, const Transform& value);
+            void setUniform(const std::string& name, const Transform& value);
 
         private:
             /// @brief ID for this shader program

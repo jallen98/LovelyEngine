@@ -39,5 +39,17 @@ namespace lov {
             /// @param message The message of this exception
             explicit ShaderException(const std::string& message);
         };
+
+        /// @brief Exception involving windows
+        class WindowException : public Exception {
+        public:
+            /// @brief Set the message of this exception with a const char*
+            /// @param message The message of this exception
+            explicit WindowException(const char* message);
+
+            /// @brief Set the message of this exception with a string
+            /// @param message The message of this exception
+            explicit WindowException(const std::string& message);
+        };
     }
 }

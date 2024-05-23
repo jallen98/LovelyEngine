@@ -18,7 +18,26 @@
 
 #include <fstream>
 
-int main() {
+int main(int argc, char *argv[]) {
+    std::string resPath = "";
+
+    // Parse arguments
+    if (argc < 2) {
+        std::cerr << "Absolute path to 'res' directory required - see README" << std::endl;
+        return -1;
+    }
+    else {
+        resPath = argv[1];
+    }
+
+    // Filepaths
+    std::string containerDiffusePath = resPath + "/Textures/container_diffuse.png";
+    std::string containerSpecularPath = resPath + "/Textures/container_specular.png";
+    std::string basicShaderVertexPath = resPath + "/Shaders/basic.vs";
+    std::string basicShaderFragPath = resPath + "/Shaders/basic.fs";
+    std::string lightShaderVertexPath = resPath + "/Shaders/light.vs";
+    std::string lightShaderFragPath = resPath + "/Shaders/light.fs";
+
     lov::Graphics::Window window(800, 600, "Lovely Engine");
     lov::Graphics::Camera cam({ 0.0f, 0.0f, 3.0f }, { 0.0f, 1.0f, 0.0f }, 0.0f, -90.0f);
     cam.clampPitch(true);
@@ -95,8 +114,8 @@ int main() {
     float attenuationLinear = 0.09f;
     float attenuationQuadratic = 0.032f;
 
-    lov::Graphics::Texture containerDiffuse("/home/jallen/LovelyEngine/res/Textures/container_diffuse.png");
-    lov::Graphics::Texture containerSpecular("/home/jallen/LovelyEngine/res/Textures/container_specular.png");
+    lov::Graphics::Texture containerDiffuse(containerDiffusePath.c_str());
+    lov::Graphics::Texture containerSpecular(containerSpecularPath.c_str());
 
     lov::Graphics::Material containerMaterial;
     containerMaterial.diffuseMapID = containerDiffuse.getID();
@@ -104,7 +123,7 @@ int main() {
 
     lov::Graphics::Shader mainShader;
     try {
-        mainShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/basic.vs", "/home/jallen/LovelyEngine/res/Shaders/basic.fs");
+        mainShader.compileFromFiles(basicShaderVertexPath, basicShaderFragPath);
     }
     catch (lov::Exceptions::ShaderException e) {
         std::cout << "Failed to compile main shader: " << e.what() << std::endl;
@@ -112,7 +131,7 @@ int main() {
 
     lov::Graphics::Shader lightShader;
     try {
-        lightShader.compileFromFiles("/home/jallen/LovelyEngine/res/Shaders/light.vs", "/home/jallen/LovelyEngine/res/Shaders/light.fs");
+        lightShader.compileFromFiles(lightShaderVertexPath, lightShaderFragPath);
     }
     catch (lov::Exceptions::ShaderException e) {
         std::cout << "Failed to compile light shader: " << e.what() << std::endl;

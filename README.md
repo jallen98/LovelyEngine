@@ -2,8 +2,8 @@
 1. `mkdir build && cd build`
 2. `cmake ..` or `cmake -D BUILD_WITH_TESTS=ON ..`
 3. `make`
-4. Running requires providing the absolulte path to the `res` directory of this repo
-   a. For example `bin/LovelyEngine /home/jallen/LovelyEngine/res`
+4. Running requires providing the absolulte path to the `res` directory of this repo    
+   a. For example `bin/LovelyEngine /home/jallen/LovelyEngine/res`    
    b. or `bin/LovelyEngineTest` to run tests
 
 # Screenshots
